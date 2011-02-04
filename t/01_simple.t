@@ -43,7 +43,7 @@ subtest 'last page' => sub {
     is $pager->prev_page(),     98;
     is $pager->previous_page(), 98;
     is $pager->first, 981;
-    is $pager->last(), 986;
+    is $pager->last(), 985;
 };
 
 subtest 'not found page' => sub {

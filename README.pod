@@ -2,7 +2,7 @@ package Data::Page::NoTotalEntries;
 use strict;
 use warnings;
 use 5.008001;
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 use Class::Accessor::Lite 0.05 (
     new => 1,
     rw => [qw/has_next entries_per_page current_page entries_on_this_page/]
@@ -36,7 +36,11 @@ sub last {
     Carp::croak("'last' method requires 'entries_on_this_page'") unless defined $self->entries_on_this_page;
 
     if ( !$self->has_next ) {
-        return $self->first + $self->entries_on_this_page;
+        if ($self->entries_on_this_page == 0) {
+            return 0;
+        } else {
+            return $self->first + $self->entries_on_this_page - 1;
+        }
     }
     else {
         return ( $self->current_page * $self->entries_per_page );
